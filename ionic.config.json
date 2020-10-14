@@ -1,0 +1,7 @@
+{
+  "name": "manejoApp",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "vue"
+}
