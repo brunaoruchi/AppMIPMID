@@ -6,18 +6,18 @@
         <ion-page>
             <ion-header>
                 <ion-toolbar>
-                    <ion-title>Add/Edit</ion-title>
+                    <ion-title>Adicionar e Editar</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-content>
+            <ion-content class="ion-padding">
                 <ion-item>
-                    <ion-label position="stacked">Nome</ion-label>
+                    <ion-label>Nome: </ion-label>
                     <ion-input v-model="formInfoProduto.nome"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Classe de Uso:</ion-label>
                     <ion-select
-                        placeholder="Escolha uma Classe de Uso"
+                        placeholder="Selecionar"
                         :value="formInfoProduto.classeDeUso"
                         @ionChange="formInfoProduto.classeDeUso= $event.target.value"
                         ok-text="Confirmar" cancel-text="Cancelar"
@@ -46,7 +46,7 @@
                 <ion-item>
                     <ion-label>Unidade de Medida:</ion-label>
                     <ion-select
-                        placeholder="Escolha uma Unidade de Medida"
+                        placeholder="Selecionar"
                         :value="formInfoProduto.unidadeDeMedida"
                         @ionChange="formInfoProduto.unidadeDeMedida= $event.target.value"
                         ok-text="Confirmar" cancel-text="Cancelar"
@@ -59,17 +59,17 @@
                     </ion-select>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Registro</ion-label>
-                    <ion-input v-model="formInfoProduto.registro"></ion-input>
+                    <ion-label>Registro:</ion-label>
+                    <ion-input type="number" v-model="formInfoProduto.registro"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Empresa Registrante</ion-label>
+                    <ion-label>Empresa Registrante</ion-label>
                     <ion-input v-model="formInfoProduto.empresaRegistrante"></ion-input>
                 </ion-item>
                 <ion-item>
                     <ion-label>Classe Toxicológica:</ion-label>
                     <ion-select
-                        placeholder="Escolha uma Classe Toxicológica"
+                        placeholder="Selecionar"
                         :value="formInfoProduto.classeToxicologica"
                         @ionChange="formInfoProduto.classeToxicologica= $event.target.value"
                         ok-text="Confirmar" cancel-text="Cancelar"
@@ -83,15 +83,17 @@
                     </ion-select>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Ingrediente Ativo (IA)</ion-label>
-                    <ion-input v-model="formInfoProduto.ingredienteAtivo"></ion-input>
+                    <ion-label>Ingrediente Ativo (IA):</ion-label>
+                    <ion-input type="number" v-model="formInfoProduto.ingredienteAtivo"></ion-input>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Concentração de IA</ion-label>
+                    <ion-label>Concentração de IA:</ion-label>
                     <ion-input v-model="formInfoProduto.concentracaoDeIa"></ion-input>
                 </ion-item>
-                <ion-button @click="handleDidDismiss(true)">Cancelar</ion-button>
-                <ion-button @click="handleDidDismiss(false)" >Salvar</ion-button>
+                <ion-button class="botao-cancelar" color="danger" expand="block" @click="handleDidDismiss(true)">
+                <ion-icon :icon="closeOutline"></ion-icon>Cancelar</ion-button>
+                <ion-button color="success" expand="block" @click="handleDidDismiss(false)">
+                <ion-icon :icon="checkmarkOutline"></ion-icon>Salvar</ion-button>
             </ion-content>
         </ion-page>
     </ion-modal>
@@ -111,7 +113,7 @@ import {
     IonButton,
  } from "@ionic/vue";
 import { defineComponent, SetupContext, reactive, computed, watch } from "vue";
-
+import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 export default defineComponent({
     name: 'ModalProdutos',
     components:{
@@ -206,10 +208,19 @@ export default defineComponent({
             inEditMode,
 
             //icons
-
+            checkmarkOutline,
+            closeOutline 
 
         };
     }
 });
 
 </script>
+<style scoped>
+    ion-item {
+        width: 100%;
+    } 
+    .botao-cancelar{
+        margin-top: 20px;
+    }
+</style>

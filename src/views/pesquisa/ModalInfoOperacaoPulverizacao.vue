@@ -9,67 +9,41 @@
                 <ion-title>Informações</ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content>
-            <ion-label><b> DADOS DA OPERAÇÃO </b> </ion-label>
+        <ion-content class="ion-padding">
+            <h1><b> DADOS DA OPERAÇÃO </b> </h1>
             <ion-item>
-                <ion-label position="floating">Data da Operação </ion-label>
-                <ion-icon slot="end" color="tertiary" :icon="calendar"></ion-icon>
-                <ion-datetime
-                    display-format="DD-MM-YYYY"
-                    v-model="formInfoOperacaoPulverizacao.dataOperacao"
-                >
-                </ion-datetime>
+                <ion-label>Data da Operação: {{new Date(formInfoOperacaoPulverizacao.dataOperacao).getDate()}}/{{ new Date(formInfoOperacaoPulverizacao.dataOperacao).getMonth()+1}}/{{ new Date(formInfoOperacaoPulverizacao.dataOperacao).getFullYear()}}</ion-label>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Estádio Da Cultura</ion-label>
-                <ion-input v-model="formInfoOperacaoPulverizacao.estadioDaCultura"></ion-input>
+                <ion-label>Estádio Da Cultura: {{formInfoOperacaoPulverizacao.estadioDaCultura}}</ion-label>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Volume de Calda</ion-label>
-                <ion-input v-model="formInfoOperacaoPulverizacao.volumeDeCalda"></ion-input>
+                <ion-label>Volume de Calda: {{formInfoOperacaoPulverizacao.volumeDeCalda}}</ion-label>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Pulverização Parcial</ion-label>
-                <ion-input v-model="formInfoOperacaoPulverizacao.pulverizacaoParcial"></ion-input>
+                <ion-label>Pulverização Parcial: {{formInfoOperacaoPulverizacao.pulverizacaoParcial}}</ion-label>
             </ion-item>
-            <ion-label><b> PRODUTOS </b></ion-label>
-            <div v-for="itemClasseDeUso in classeDeUso" :key="itemClasseDeUso.nome">
-                <ion-item-divider>
-                    <ion-label>{{itemClasseDeUso.nome}}</ion-label>
-                </ion-item-divider>
-            <ion-list v-for="itemProduto in formInfoOperacaoPulverizacao.produtosDaOperacao" :key="itemProduto.id">
-                <ion-item v-if="itemProduto.classeDeUso===itemClasseDeUso.nome">
-                    <ion-row>
-                        <ion-label> Nome: {{itemProduto.nomeProduto}}</ion-label>
+            <h1><b> PRODUTOS </b></h1>
+            <div v-for="itemProduto in formInfoOperacaoPulverizacao.produtosDaOperacao" :key="itemProduto.id">
+                <div v-if="itemProduto.dosagem!==''">
+                    <ion-row class="row-nome">
+                        <ion-col><h2>Nome: {{itemProduto.nomeProduto}} ({{itemProduto.unidadeProduto}})</h2></ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-label position="stacked">Alvo Principal ou Função</ion-label>
-                        <ion-select
-                            placeholder="Selecionar"
-                            :value="itemProduto.alvo"
-                            @ionChange="itemProduto.alvo= $event.target.value"
-                            ok-text="Confirmar" cancel-text="Cancelar"                    
-                        >
-                            <div v-for="itemAlvo in alvo" :key="itemAlvo.id" >
-                                <ion-select-option v-if="itemAlvo.classeDeUso===itemClasseDeUso.nome">
-                                    {{itemAlvo.nome}}                   
-                                </ion-select-option>
-                            </div>
-                        </ion-select>
+                      <ion-col>Classe de Uso:</ion-col><ion-col>{{itemProduto.classeDeUso}}</ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-label position="stacked">Dosagem do Produto(Unidade/ha)</ion-label>
-                        <ion-input type="number" v-model="itemProduto.dosagem"></ion-input>
+                        <ion-col>Alvo Principal ou Função:</ion-col><ion-col>{{itemProduto.alvo}}</ion-col>
                     </ion-row>
                     <ion-row>
-                        <ion-label position="stacked">Preço do Produto(R$/Unidade)</ion-label>
-                        <ion-input type="number" v-model="itemProduto.preco"></ion-input>
+                        <ion-col>Dosagem do Produto(Unidade/ha):</ion-col><ion-col>{{itemProduto.dosagem}}</ion-col>
                     </ion-row>
-                </ion-item>        
-            </ion-list>
+                    <ion-row>
+                        <ion-col> Preço do Produto(R$/Unidade):</ion-col><ion-col>{{itemProduto.preco}} </ion-col>
+                    </ion-row>
+                </div>        
             </div>
-
-            <ion-button @click="handleDidDismissOperacaoPulverizacao()">Fechar</ion-button>
+            <ion-button expand="block" @click="handleDidDismissOperacaoPulverizacao()">Fechar</ion-button>
         </ion-content>
     </ion-page>
     </ion-modal>
@@ -84,28 +58,21 @@ import {
     IonTitle,
     IonToolbar,
     IonLabel,
-    IonInput,
-    IonDatetime,
     IonItem,
     IonButton,
-    IonIcon,
 } from "@ionic/vue";
 import { defineComponent, SetupContext, reactive, watch } from "vue";
-import { calendar } from "ionicons/icons";
 
 export default defineComponent({
   name: "ModalInfoOperacaoPulverizao",
   components: {
     IonModal,
     IonPage,
-    IonIcon,
     IonContent,
     IonHeader,
     IonTitle,
     IonToolbar,
     IonLabel,
-    IonInput,
-    IonDatetime,
     IonItem,
     IonButton,
   },
@@ -161,7 +128,6 @@ export default defineComponent({
       classeDeUso,
 
       //icons
-      calendar,
     };
   },
 });
@@ -172,6 +138,21 @@ export default defineComponent({
         width: 100%;
     } 
     ion-row {
-        display: block;
+      border-bottom: 1px solid rgba(197, 197, 197, 0.89);
+      padding: 2px;
+    }
+    h1{
+        color: white;
+        background-color: black;
+        text-align: center;
+        font-size: 20px;
+    }
+    h2{
+        font-size: 16px;
+        border-bottom: 1px solid black;
+        margin-bottom: 0;
+    }
+    .row-nome{
+      border-bottom: 0;
     }
 </style>

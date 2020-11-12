@@ -18,15 +18,25 @@
       </div>
       <div>
         <ion-item>
-          <ion-label>
-            <div class="ion-text-wrap"><b>Safra:</b> {{ ur }}</div>
-          </ion-label>
-          <ion-button color="warning" @click="showModalPesquisa" slot="end">
-            <ion-icon color="light" :icon="pencil" slot="icon-only" ></ion-icon>
+          <ion-row><b>Safra:</b>{{ ur }}</ion-row>
+          <ion-button color="none" @click="showModalPesquisa">
+            <ion-icon color="dark" :icon="eye" ></ion-icon>
           </ion-button>
-          <ion-button expand="block" @click="() => router.push('/operacaoDePulverizacao')">Pulverizações
-              <ion-icon color="warinig" slot="icon-only" ></ion-icon>
+          <ion-button color="medium">
+            <ion-icon color="dark" :icon="bug" ></ion-icon>
           </ion-button>
+          <ion-button color="success">
+            <ion-icon color="light" :icon="leaf" ></ion-icon>
+          </ion-button>  
+          <ion-button color="dark" @click="() => router.push('/operacaoDePulverizacao')">
+              <ion-icon color="light" :icon="medical" ></ion-icon>
+          </ion-button>
+          <ion-button color="warning">
+            <ion-icon color="light" :icon="pencil" ></ion-icon>
+          </ion-button>
+          <ion-button color="danger">
+              <ion-icon :icon="trash"></ion-icon>
+            </ion-button>
         </ion-item>
       </div>
     </ion-content>
@@ -37,7 +47,7 @@
 import {
   IonContent,
   IonIcon,
-  IonLabel,
+  // IonLabel,
   IonHeader,
   IonPage,
   IonTitle,
@@ -49,7 +59,7 @@ import {
 } from "@ionic/vue";
 import { defineComponent, reactive } from "vue";
 import { useRouter } from "vue-router";
-import { pencil } from 'ionicons/icons';
+import { eye, bug, medical,leaf, pencil, trash } from 'ionicons/icons';
 import ModalInfoPesquisa from "./ModalInfoPesquisa.vue";
 
 export default defineComponent({
@@ -57,7 +67,7 @@ export default defineComponent({
   components: {
     IonItem,
     IonContent,
-    IonLabel,
+    // IonLabel,
     IonHeader,
     IonPage,
     IonTitle,
@@ -70,7 +80,7 @@ export default defineComponent({
   },
   data() {
     return {
-      ur: "Cornélio Procópio",
+      ur: "Safra 2020/2021",
     };
   },
   setup() {
@@ -91,7 +101,12 @@ export default defineComponent({
         showModalPesquisa,
         handleModalInfoClosed,
         router: useRouter(),
+        eye,
+        medical,
+        bug,
+        leaf,
         pencil,
+        trash
     };
   },
 });

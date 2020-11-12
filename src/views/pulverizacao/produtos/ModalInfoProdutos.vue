@@ -9,40 +9,37 @@
                     <ion-title>Informações</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-content>
+            <ion-content class="ion-padding">
                 <ion-item>
-                    <ion-label position="stacked">Nome</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.nome"></ion-input>
+                    <ion-label>Nome: {{formInfoProduto.nome}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Classe de Uso</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.classeDeUso"></ion-input>
+                    <ion-label>Classe de Uso: {{formInfoProduto.classeDeUso}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Unidade de Medida</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.unidadeDeMedida"></ion-input>
+                    <ion-label>Unidade de Medida: {{unidadeDeMedida}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Registro</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.registro"></ion-input>
+                    <ion-label>Registro: {{formInfoProduto.registro}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Empresa Registrante</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.empresaRegistrante"></ion-input>
+                    <ion-label>Empresa Registrante: {{formInfoProduto.empresaRegistrante}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Classe Toxicológica</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.classeToxicologica"></ion-input>
+                    <ion-label>Classe Toxicológica: {{formInfoProduto.classeToxicologica}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Ingrediente Ativo (IA)</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.ingredienteAtivo"></ion-input>
+                    <ion-label>Ingrediente Ativo (IA): {{formInfoProduto.ingredienteAtivo}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Concentração de IA</ion-label>
-                    <ion-input disabled v-model="formInfoProduto.concentracaoDeIa"></ion-input>
-                </ion-item>               
-                <ion-button @click="handleDidDismissProduto()">Fechar</ion-button>
+                    <div>Concentração de IA</div>
+                    <div>{{formInfoProduto.concentracaoDeIa}}</div>
+                </ion-item>
+                <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                    <ion-fab-button color="danger" @click="handleDidDismissProduto()">
+                    <ion-icon :icon="close"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab>
             </ion-content>
         </ion-page>
     </ion-modal>
@@ -57,12 +54,10 @@ import {
     IonTitle,
     IonToolbar,
     IonLabel,
-    IonInput,
     IonItem,
-    IonButton,
  } from "@ionic/vue";
 import { defineComponent, SetupContext, reactive, watch } from "vue";
-
+import { close } from 'ionicons/icons';
 export default defineComponent({
     name: 'ModalInfoProdutos',
     components:{
@@ -73,9 +68,8 @@ export default defineComponent({
         IonTitle,
         IonToolbar,
         IonLabel,
-        IonInput,
         IonItem,
-        IonButton,
+
     },
     props: {
         isOpenInfo : {
@@ -122,9 +116,15 @@ export default defineComponent({
             formInfoProduto,
 
             //icons
+            close
 
         };
     }
 });
 
 </script>
+<style scoped>
+    ion-item {
+        width: 100%;
+    }
+</style>

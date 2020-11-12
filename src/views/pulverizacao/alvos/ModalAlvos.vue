@@ -6,12 +6,12 @@
         <ion-page>
             <ion-header>
                 <ion-toolbar>
-                    <ion-title>Add/Edit</ion-title>
+                    <ion-title>Adicionar e Editar</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-content>
+            <ion-content class="ion-padding">
                 <ion-item>
-                    <ion-label position="stacked">Descrição</ion-label>
+                    <ion-label>Descrição: </ion-label>
                     <ion-input v-model="formInfoAlvo.descricao"></ion-input>
                 </ion-item>
                 
@@ -44,8 +44,10 @@
                         <ion-select-option>Multiplas</ion-select-option>
                     </ion-select>
                 </ion-item>
-                <ion-button @click="handleDidDismiss(true)">Cancelar</ion-button>
-                <ion-button @click="handleDidDismiss(false)" >Salvar</ion-button>
+                <ion-button class="botao-cancelar" color="danger" expand="block" @click="handleDidDismiss(true)">
+                <ion-icon :icon="closeOutline"></ion-icon>Cancelar</ion-button>
+                <ion-button color="success" expand="block" @click="handleDidDismiss(false)">
+                <ion-icon :icon="checkmarkOutline"></ion-icon>Salvar</ion-button>
             </ion-content>
         </ion-page>
     </ion-modal>
@@ -65,7 +67,7 @@ import {
     IonButton,
  } from "@ionic/vue";
 import { defineComponent, SetupContext, reactive, computed, watch } from "vue";
-
+import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 
 export default defineComponent({
     name: 'ModalAlvos',
@@ -135,11 +137,6 @@ export default defineComponent({
             ctx.emit('modal-alvo-fechado', payload);
 
             //Limpa os campos
-            Object.assign(formInfoAlvo, {
-                descricao: "",
-                classeDeUso: "",
-                data: "",
-            });
         };
 
         return{
@@ -151,10 +148,19 @@ export default defineComponent({
             inEditMode,
 
             //icons
-
-
+            checkmarkOutline,
+            closeOutline
         };
     }
 });
 
 </script>
+
+<style scoped>
+    ion-item {
+        width: 100%;
+    } 
+    .botao-cancelar{
+        margin-top: 20px;
+    }
+</style>

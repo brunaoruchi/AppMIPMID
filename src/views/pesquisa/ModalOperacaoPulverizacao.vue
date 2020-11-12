@@ -6,49 +6,82 @@
     <ion-page>
         <ion-header>
             <ion-toolbar>
-                <ion-title>Add/Edit</ion-title>
+                <ion-title>Adicionar e Editar</ion-title>
             </ion-toolbar>
         </ion-header>
-        <ion-content>
-            <!-- <div>
-                <modal-add-produto :is-open="modalAddProdutoStatus.showAddProduto" :initialValues= "modalAddProdutoStatus.data" @modal-add-produto="handleModalAddProdutoClosed" />
-            </div> -->
-            <ion-label><b> DADOS DA OPERAÇÃO </b> </ion-label>
+        <ion-content class="ion-padding">
+            <h1><b>DADOS DA OPERAÇÃO</b></h1>
             <ion-item>
-                <ion-label position="floating">Data da Operação </ion-label>
-                <ion-icon slot="end" color="tertiary" :icon="calendar"></ion-icon>
+                <ion-label>Data da Operação </ion-label>
                 <ion-datetime
-                    display-format= "DD-MM-YYYY"
+                    display-format= "DD/MM/YYYY"
                     v-model="formInfoOperacaoPulverizacao.dataOperacao"
                 >
                 </ion-datetime>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Estádio Da Cultura</ion-label>
-                <ion-input v-model="formInfoOperacaoPulverizacao.estadioDaCultura"></ion-input>
+                <ion-label>Estádio Da Cultura</ion-label>
+                <ion-select
+                    placeholder="Selecionar"
+                    :value="formInfoOperacaoPulverizacao.estadioDaCultura"
+                    @ionChange="formInfoOperacaoPulverizacao.estadioDaCultura= $event.target.value"
+                    ok-text="Confirmar" cancel-text="Cancelar"
+                >
+                  <ion-select-option>Pré-emergência</ion-select-option>
+                  <ion-select-option >VE</ion-select-option>
+                  <ion-select-option>VC</ion-select-option>
+                  <ion-select-option>V1</ion-select-option>
+                  <ion-select-option>V2</ion-select-option>
+                  <ion-select-option>V3</ion-select-option>
+                  <ion-select-option>V4</ion-select-option>
+                  <ion-select-option>V5</ion-select-option>
+                  <ion-select-option>V6</ion-select-option>
+                  <ion-select-option>V7</ion-select-option>
+                  <ion-select-option>V8</ion-select-option>
+                  <ion-select-option>V9</ion-select-option>
+                  <ion-select-option>VE</ion-select-option>
+                  <ion-select-option>VC</ion-select-option>
+                  <ion-select-option>V1</ion-select-option>
+                  <ion-select-option>V2</ion-select-option>
+                  <ion-select-option>V3</ion-select-option>
+                  <ion-select-option>V4</ion-select-option>
+                  <ion-select-option>V5</ion-select-option>
+                  <ion-select-option>V6</ion-select-option>
+                  <ion-select-option>V7</ion-select-option>
+                  <ion-select-option>V8</ion-select-option>
+                  <ion-select-option>V9</ion-select-option>
+                </ion-select>
+              </ion-item>
+            <ion-item>
+                <ion-label>Volume de Calda</ion-label>
+                <ion-input type="number" v-model="formInfoOperacaoPulverizacao.volumeDeCalda"></ion-input>
             </ion-item>
             <ion-item>
-                <ion-label position="stacked">Volume de Calda</ion-label>
-                <ion-input v-model="formInfoOperacaoPulverizacao.volumeDeCalda"></ion-input>
+                <ion-label>Pulverização Parcial</ion-label>
+                <ion-select
+                    placeholder="Selecionar"
+                    :value="formInfoOperacaoPulverizacao.pulverizacaoParcial"
+                    @ionChange="formInfoOperacaoPulverizacao.pulverizacaoParcial= $event.target.value"
+                    ok-text="Confirmar" cancel-text="Cancelar"
+                >
+                  <ion-select-option>Não</ion-select-option>
+                  <ion-select-option>Sim</ion-select-option>
+                </ion-select>
             </ion-item>
-            <ion-item>
-                <ion-label position="stacked">Pulverização Parcial</ion-label>
-                <ion-input v-model="formInfoOperacaoPulverizacao.pulverizacaoParcial"></ion-input>
-            </ion-item>
-            <ion-label><b> PRODUTOS </b></ion-label>
+            <h1><b> PRODUTOS </b> </h1>
             <div v-for="itemClasseDeUso in classeDeUso" :key="itemClasseDeUso.nome">
-                <ion-item-divider>
-                    <ion-label>{{itemClasseDeUso.nome}}</ion-label>
-                </ion-item-divider>
-                
-                <ion-list v-for="itemProduto in formInfoOperacaoPulverizacao.produtosDaOperacao" :key="itemProduto.id">
-                    <ion-item v-if="itemProduto.classeDeUso===itemClasseDeUso.nome">
+                <h2>
+                    {{itemClasseDeUso.nome}}
+                </h2>
+                <div v-for="itemProduto in formInfoOperacaoPulverizacao.produtosDaOperacao" :key="itemProduto.id"> 
+                    <div v-if="itemProduto.classeDeUso===itemClasseDeUso.nome">
                         <ion-row>
-                            <ion-label> Nome: {{itemProduto.nomeProduto}}</ion-label>
+                            <ion-col>Nome:</ion-col> 
+                            <ion-col>{{itemProduto.nomeProduto}} ({{itemProduto.unidadeProduto}})</ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-label position="stacked">Alvo Principal ou Função</ion-label>
-                            <ion-select
+                            <ion-col>Alvo Principal/Função</ion-col>
+                            <ion-col><ion-select
                                 placeholder="Selecionar"
                                 :value="itemProduto.alvo"
                                 @ionChange="itemProduto.alvo= $event.target.value"
@@ -60,22 +93,23 @@
                                     </ion-select-option>
                                 </div>
                             </ion-select>
+                            </ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-label position="stacked">Dosagem do Produto(Unidade/ha)</ion-label>
-                            <ion-input type="number" v-model="itemProduto.dosagem"></ion-input>
+                            <ion-col>Dosagem do Produto<br>(Unidade/ha)</ion-col>
+                            <ion-col><ion-input type="number" v-model="itemProduto.dosagem"></ion-input></ion-col>
                         </ion-row>
                         <ion-row>
-                            <ion-label position="stacked">Preço do Produto(R$/Unidade)</ion-label>
-                            <ion-input type="number" v-model="itemProduto.preco"></ion-input>
+                            <ion-col>Preço do Produto<br>(R$/Unidade)</ion-col>
+                            <ion-col><ion-input type="number" v-model="itemProduto.preco"></ion-input></ion-col>
                         </ion-row>
-                    </ion-item>        
-                </ion-list>
+                    </div>
+                </div>
             </div>
-
-            <ion-button @click="handleDidDismiss(true)">Cancelar</ion-button>
-            <ion-button @click="handleDidDismiss(false)" >Salvar</ion-button>
-            
+            <ion-button class="botao-cancelar" color="danger" expand="block" @click="handleDidDismiss(true)">
+                <ion-icon :icon="closeOutline"></ion-icon>Cancelar</ion-button>
+            <ion-button color="success" expand="block" @click="handleDidDismiss(false)">
+                <ion-icon :icon="checkmarkOutline"></ion-icon>Salvar</ion-button>            
         </ion-content>
     </ion-page>
     </ion-modal>
@@ -98,10 +132,7 @@ import {
     
  } from "@ionic/vue";
 import { defineComponent, SetupContext, reactive, computed, watch } from "vue";
-import { calendar,shareSharp } from 'ionicons/icons';
-import dataStore from "../../datastoreOperacaoPulverizacao";
-//import ModalAddProduto from "./ModalAddProduto.vue";
-
+import { checkmarkOutline, closeOutline } from 'ionicons/icons';
 export default defineComponent({
     name: 'ModalOperacaoPulverizacao',
     components:{
@@ -117,7 +148,6 @@ export default defineComponent({
         IonItem,
         IonButton,
         IonIcon,
-        //ModalAddProduto,
     },
     props: {
         isOpen : {
@@ -190,57 +220,6 @@ export default defineComponent({
         classeDeUso.push({
             nome: "Fungicida"
         });
-        // classeDeUso.push({
-        //     nome: "Acaricida"           
-        // });
-        // classeDeUso.push({
-        //     nome: "Bactericida"
-        // });
-        // classeDeUso.push({
-        //     nome: "Espelhante Adesivo"
-        // });
-        
-        // classeDeUso.push({
-        //     nome: "Estimulante"
-        // });
-        
-        // classeDeUso.push({
-        //     nome: "Inseticida"
-        // });
-        // classeDeUso.push({
-        //     nome: "Outros"
-        // });
-        
-        // classeDeUso.push({
-        //     nome: "Lesmicida/Moluscicida"
-        // });
-        // classeDeUso.push({
-        //     nome: "Feromônio"
-        // });
-        // classeDeUso.push({
-        //     nome: "Nematicida"
-        // });
-        // classeDeUso.push({
-        //     nome: "Formicida"
-        // });
-        // classeDeUso.push({
-        //     nome: "Regulador de Crescimento"
-        // });
-        // classeDeUso.push({
-        //     nome: "Agente Biológico"
-        // });
-        // classeDeUso.push({
-        //     nome: "Inseticida Biológico"
-        // });
-        // classeDeUso.push({
-        //     nome: "Adubo Foliar"
-        // });
-        // classeDeUso.push({
-        //     nome:"Sal Comum"
-        // });
-        // classeDeUso.push({
-        //     nome: "Multiplas"
-        // });
 
         const formInfoOperacaoPulverizacao = reactive<any> ({
             dataOperacao: "",
@@ -256,6 +235,7 @@ export default defineComponent({
                 classeDeUso: item.classeDeUso,
                 alvo: "",
                 nomeProduto: item.nomeProduto,
+                unidadeProduto: item.unidadeProduto,
                 dosagem: "",
                 preco: "",
             });
@@ -301,31 +281,9 @@ export default defineComponent({
                 dataOperacao: "",
                 estadioDaCultura: "",
                 volumeDeCalda: "",
-                pulverizacaoParcial:"",
-                produtosDaOperacao: []
+                pulverizacaoParcial:""
             });
         };
-        // const { listDataOperacaoPulverizacao, deleteOperacaoPulverizacao, addOrUpdateOperacaoPulverizacao } = dataStore()
-        // const modalAddProdutoStatus = reactive<{ showAddProduto: boolean; data: any}>({
-        //     showAddProduto: false,
-        //     data: null,
-        // })
-        // const handleAddProdutoOperacaoPulverizacao = (item: any) => {
-        //     modalAddProdutoStatus.showAddProduto = true;
-        //     modalAddProdutoStatus.data = item;
-        // }
-
-        // const handleModalAddProdutoClosed = (eventData: any) => {
-        //     modalAddProdutoStatus.showAddProduto = false;
-        //     modalAddProdutoStatus.data = null;
-
-        //     if(eventData.isCancelled){
-        //         alert("Cancelado")
-        //     }else{
-        //         addOrUpdateOperacaoPulverizacao(eventData.formInfoOperacaoPulverizacao, eventData.formInfoOperacaoPulverizacao.id);
-        //         modalAddProdutoStatus.data = null;
-        //     }
-        // };
 
         return{
             //functions
@@ -338,12 +296,8 @@ export default defineComponent({
             inEditMode,
 
             //icons
-            calendar,
-            shareSharp,
-
-            // modalAddProdutoStatus,
-            // handleAddProdutoOperacaoPulverizacao,
-            // handleModalAddProdutoClosed,
+            checkmarkOutline,
+            closeOutline
         };
     }
 });
@@ -354,7 +308,24 @@ export default defineComponent({
     ion-row, ion-item {
         width: 100%;
     } 
+    h1{
+        color: white;
+        background-color: black;
+        text-align: center;
+        font-size: 20px;
+    }
+    h2{
+        font-size: 16px;
+        border-bottom: 1px solid black;
+        margin-bottom: 0;
+    }
+    .lista{
+        margin-top: 4px;
+    }
     ion-row {
-        display: block;
+        border-bottom: 1px solid rgba(197, 197, 197, 0.89);
+    }
+    .botao-cancelar{
+        margin-top: 20px;
     }
 </style>

@@ -18,21 +18,16 @@
       </div>
       <div v-for="item in displayList" :key="item.id">
         <ion-item>
-          <ion-label>
-            <div class="ion-text-wrap">Descrição: {{item.descricao}}</div>            
-            <div class="ion-text-wrap">Classe de uso: {{item.classeDeUso}}</div>
-            <div class="ion-text-wrap">Responsável Técnico: {{item.responsavelTecnico}}</div>
-            <div class="ion-text-wrap">Última Alteração: {{ new Date(item.ultimaAlteracao).getDate()}}-{{ new Date(item.ultimaAlteracao).getMonth()+1}}-{{ new Date(item.ultimaAlteracao).getFullYear()}}</div>
-          </ion-label>
+          <ion-label><b>Descrição:</b><br>{{item.descricao}}</ion-label>
           <div>
-            <ion-button @click="handleReadAlvo(item)" slot="end">
-              <ion-icon :icon="reader" slot="icon-only" ></ion-icon>
+            <ion-button @click="handleReadAlvo(item)">
+              <ion-icon :icon="reader" ></ion-icon>
             </ion-button>
-            <ion-button color="warning" @click="handleEditAlvo(item)" slot="end">
-              <ion-icon color="light" :icon="pencil" slot="icon-only" ></ion-icon>
+            <ion-button color="warning" @click="handleEditAlvo(item)">
+              <ion-icon color="light" :icon="pencil"></ion-icon>
             </ion-button>
-            <ion-button @click.self="handleDeleteAlvo(item)" slot="end" fill="clear">
-              <ion-icon color="danger" :icon="trashSharp" slot="icon-only" ></ion-icon>
+            <ion-button color="danger" @click.self="handleDeleteAlvo(item)">
+              <ion-icon :icon="trash" ></ion-icon>
             </ion-button>
           </div>
         </ion-item>
@@ -49,7 +44,7 @@
 <script lang="ts">
 import { IonContent, IonIcon, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonItem, IonBackButton, IonButton, IonFabButton, IonFab } from '@ionic/vue';
 import { computed, defineComponent, reactive, } from 'vue';
-import { add, pencil, trashSharp, reader } from 'ionicons/icons';
+import { add, pencil, trash, reader } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 
 import ModalAlvos from "./ModalAlvos.vue";
@@ -104,16 +99,13 @@ export default defineComponent({
 
     const handleModalClosed = (eventData: any) => {
       modalAlvoInfo.show = false;
-      if(eventData.isCancelled){
-        alert("Cancelado")
+      if(eventData.formInfoAlvo.id){
+        addOrUpdateAlvo(eventData.formInfoAlvo, eventData.formInfoAlvo.id);
       }else{
-        if(eventData.formInfoAlvo.id){
-          addOrUpdateAlvo(eventData.formInfoAlvo, eventData.formInfoAlvo.id);
-        }else{
-          addOrUpdateAlvo(eventData.formInfoAlvo);
-        }
-        modalAlvoInfo.data = null;
+        addOrUpdateAlvo(eventData.formInfoAlvo);
       }
+      modalAlvoInfo.data = null;
+      
     };
 
     //Modal 2
@@ -149,7 +141,7 @@ export default defineComponent({
       add,
       reader,
       pencil,
-      trashSharp,
+      trash,
 
       //properties
       modalAlvoInfo,
@@ -161,32 +153,3 @@ export default defineComponent({
 });
 </script>
 
-<style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-</style>

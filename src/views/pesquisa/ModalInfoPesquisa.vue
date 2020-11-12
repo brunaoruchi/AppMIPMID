@@ -9,18 +9,30 @@
                     <ion-title>Informações</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-content>
+            <ion-content class="ion-padding">
                 <ion-item>
-                    <ion-label>
-                        <div class="ion-text-wrap">Safra: {{safra}} </div>
-                        <div class="ion-text-wrap">Região: {{regiao}} </div>
-                        <div class="ion-text-wrap">Município: {{municipio}} </div>
-                        <div class="ion-text-wrap">UR: {{ur}} </div>
-                        <div class="ion-text-wrap">Produtor: {{produtor}} </div>
-                        <div class="ion-text-wrap">Cultivar: {{cultivar}} </div>
-                        <div class="ion-text-wrap">Data da emergência: {{dataDeEmergencia}} </div>
-                        <div class="ion-text-wrap">Encerramento da Coleta: {{encerramentoDaColeta}} </div>
-                    </ion-label>
+                    <ion-label>Safra: {{safra}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Região: {{regiao}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Município: {{municipio}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>UR: {{ur}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Produtor: {{produtor}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Cultivar: {{cultivar}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Data da emergência: {{dataDeEmergencia}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Encerramento da Coleta: {{encerramentoDaColeta}}</ion-label>
                 </ion-item>
                 <ion-fab vertical="bottom" horizontal="end" slot="fixed">
                     <ion-fab-button color="danger" @click="handleDidDismiss()">

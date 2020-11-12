@@ -20,21 +20,19 @@
       <div v-for="item in displayList" :key="item.id">
         <ion-item>
           <ion-label>
-            <div class="ion-text-wrap">Data: {{ new Date(item.dataOperacao).getDate()}}-{{ new Date(item.dataOperacao).getMonth()+1}}-{{ new Date(item.dataOperacao).getFullYear()}}</div>
-            <div class="ion-text-wrap">Responsável Técnico: {{item.responsavelTecnico}}</div>
-            <div class="ion-text-wrap">Última Alteração: {{ new Date(item.ultimaAlteracao).getDate()}}-{{ new Date(item.ultimaAlteracao).getMonth()+1}}-{{ new Date(item.ultimaAlteracao).getFullYear()}}</div>
+            <div class="ion-text-wrap"><b>Data:</b> {{ new Date(item.dataOperacao).getDate()}}/{{ new Date(item.dataOperacao).getMonth()+1}}/{{ new Date(item.dataOperacao).getFullYear()}}</div>
           </ion-label>
           
           <div>
-            <ion-button @click="handleReadOperacaoPulverizacao(item)" slot="end">
-              <ion-icon :icon="reader" slot="icon-only" ></ion-icon>
+            <ion-button @click="handleReadOperacaoPulverizacao(item)" >
+              <ion-icon :icon="reader"></ion-icon>
             </ion-button>
             
-            <ion-button color="warning" @click="handleEditOperacaoPulverizacao(item)" slot="end">
-              <ion-icon color="light" :icon="pencil" slot="icon-only" ></ion-icon>
+            <ion-button color="warning" @click="handleEditOperacaoPulverizacao(item)" >
+              <ion-icon color="light" :icon="pencil"></ion-icon>
             </ion-button>
-            <ion-button @click.self="handleDeleteOperacaoPulverizacao(item)" slot="end" fill="clear">
-              <ion-icon color="danger" :icon="trashSharp" slot="icon-only" ></ion-icon>
+            <ion-button color="danger" @click.self="handleDeleteOperacaoPulverizacao(item)">
+              <ion-icon :icon="trash"></ion-icon>
             </ion-button>
           </div>
         </ion-item>
@@ -51,7 +49,7 @@
 <script lang="ts">
 import { IonContent, IonIcon, IonLabel, IonHeader, IonPage, IonTitle, IonToolbar, IonButtons, IonItem, IonBackButton, IonButton, IonFabButton, IonFab } from '@ionic/vue';
 import { computed, defineComponent, reactive, } from 'vue';
-import { add, pencil, trashSharp, reader, shareSharp } from 'ionicons/icons';
+import { add, pencil, trash, reader, shareSharp } from 'ionicons/icons';
 import { useRouter } from 'vue-router';
 
 import ModalOperacaoPulverizacao from "./ModalOperacaoPulverizacao.vue";
@@ -107,16 +105,16 @@ export default defineComponent({
 
     const handleModalClosed = (eventData: any) => {
       modalPulverizaoInfo.show = false;
-      if(eventData.isCancelled){
-        alert("Cancelado")
-      }else{
+      // if(eventData.isCancelled){
+      //   alert("Cancelado")
+      // }else{
         if(eventData.formInfoOperacaoPulverizacao.id){
           addOrUpdateOperacaoPulverizacao(eventData.formInfoOperacaoPulverizacao, eventData.formInfoOperacaoPulverizacao.id);
         }else{
           addOrUpdateOperacaoPulverizacao(eventData.formInfoOperacaoPulverizacao);
         }
         modalPulverizaoInfo.data = null;
-      }
+      // }
     };
 
     //Modal 2
@@ -155,7 +153,7 @@ export default defineComponent({
       add,
       reader,
       pencil,
-      trashSharp,
+      trash,
       shareSharp,
 
       //properties
@@ -167,33 +165,3 @@ export default defineComponent({
 
 });
 </script>
-
-<style scoped>
-#container {
-  text-align: center;
-  
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-#container strong {
-  font-size: 20px;
-  line-height: 26px;
-}
-
-#container p {
-  font-size: 16px;
-  line-height: 22px;
-  
-  color: #8c8c8c;
-  
-  margin: 0;
-}
-
-#container a {
-  text-decoration: none;
-}
-</style>

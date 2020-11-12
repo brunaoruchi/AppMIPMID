@@ -19,26 +19,17 @@
       <div v-for="item in displayList" :key="item.id">
         <ion-item>
           <ion-label>
-            <div class="ion-text-wrap">Nome: {{item.nome}}</div>
-            <div class="ion-text-wrap">Classe de uso: {{item.classeDeUso}}</div>
-            <div class="ion-text-wrap">Unidade de Medida: {{item.unidadeDeMedida}}</div>
-            <div class="ion-text-wrap">Registro: {{item.registro}}</div>
-            <div class="ion-text-wrap">Empresa Registrante: {{item.empresaRegistrante}}</div>
-            <div class="ion-text-wrap">Classe Toxicológica: {{item.classeToxicologica}}</div>
-            <div class="ion-text-wrap">Ingrediente Ativo (IA): {{item.ingredienteAtivo}}</div>
-            <div class="ion-text-wrap">Concentração de IA: {{item.concentracaoDeIa}}</div>
-            <div class="ion-text-wrap">Responsável Técnico: {{item.responsavelTecnico}}</div>
-            <div class="ion-text-wrap">Última Alteração: {{ new Date(item.ultimaAlteracao).getDate()}}-{{ new Date(item.ultimaAlteracao).getMonth()+1}}-{{ new Date(item.ultimaAlteracao).getFullYear()}}</div>
+            <div class="ion-text-wrap"> <b>Nome:</b> {{item.nome}}</div>
           </ion-label>
           <div>
-            <ion-button @click="handleReadAlvo(item)" slot="end">
-              <ion-icon :icon="reader" slot="icon-only" ></ion-icon>
+            <ion-button @click="handleReadAlvo(item)" >
+              <ion-icon :icon="reader"></ion-icon>
             </ion-button>
-            <ion-button color="warning" @click="handleEditAlvo(item)" slot="end">
-              <ion-icon color="light" :icon="pencil" slot="icon-only" ></ion-icon>
+            <ion-button color="warning" @click="handleEditAlvo(item)" >
+              <ion-icon color="light" :icon="pencil"></ion-icon>
             </ion-button>
-            <ion-button @click.self="handleDeleteAlvo(item)" slot="end" fill="clear">
-              <ion-icon color="danger" :icon="trashSharp" slot="icon-only" ></ion-icon>
+            <ion-button color="danger" @click.self="handleDeleteAlvo(item)">
+              <ion-icon :icon="trashSharp"></ion-icon>
             </ion-button>
           </div>
         </ion-item>
@@ -111,16 +102,13 @@ export default defineComponent({
 
     const handleModalClosed = (eventData: any) => {
       modalAlvoInfo.show = false;
-      if(eventData.isCancelled){
-        alert("Cancelado")
+      if(eventData.formInfoProduto.id){
+        addOrUpdateAlvo(eventData.formInfoProduto, eventData.formInfoProduto.id);
       }else{
-        if(eventData.formInfoProduto.id){
-          addOrUpdateAlvo(eventData.formInfoProduto, eventData.formInfoProduto.id);
-        }else{
-          addOrUpdateAlvo(eventData.formInfoProduto);
-        }
-        modalAlvoInfo.data = null;
+        addOrUpdateAlvo(eventData.formInfoProduto);
       }
+      modalAlvoInfo.data = null;
+      
     };
 
     //Modal 2

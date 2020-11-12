@@ -9,16 +9,24 @@
                     <ion-title>Informações</ion-title>
                 </ion-toolbar>
             </ion-header>
-            <ion-content>
+            <ion-content class="ion-padding">
                 <ion-item>
-                    <ion-label position="stacked">Descrição</ion-label>
-                    <ion-input disabled v-model="formInfoAlvo.descricao"></ion-input>
+                    <ion-label>Descrição: {{formInfoAlvo.descricao}}</ion-label>
                 </ion-item>
                 <ion-item>
-                    <ion-label position="stacked">Classe de Uso</ion-label>
-                    <ion-input disabled v-model="formInfoAlvo.classeDeUso"></ion-input>
+                    <ion-label>Classe de Uso: {{formInfoAlvo.classeDeUso}}</ion-label>
                 </ion-item>
-                <ion-button @click="handleDidDismissAlvo()">Fechar</ion-button>
+                <ion-item>
+                    <ion-label>Responsável Técnico: {{formInfoAlvo.responsavelTecnico}}</ion-label>
+                </ion-item>
+                <ion-item>
+                    <ion-label>Última Alteração: {{ new Date(formInfoAlvo.ultimaAlteracao).getDate()}}/{{ new Date(formInfoAlvo.ultimaAlteracao).getMonth()+1}}/{{ new Date(formInfoAlvo.ultimaAlteracao).getFullYear()}}</ion-label>
+                </ion-item>
+                <ion-fab vertical="bottom" horizontal="end" slot="fixed">
+                    <ion-fab-button color="danger" @click="handleDidDismissAlvo()">
+                    <ion-icon :icon="close"></ion-icon>
+                    </ion-fab-button>
+                </ion-fab> 
             </ion-content>
         </ion-page>
     </ion-modal>
@@ -33,12 +41,11 @@ import {
     IonTitle,
     IonToolbar,
     IonLabel,
-    IonInput,
     IonItem,
-    IonButton,
+    
  } from "@ionic/vue";
 import { defineComponent, SetupContext, reactive, watch } from "vue";
-
+import { close } from 'ionicons/icons';
 export default defineComponent({
     name: 'ModalInfoAlvos',
     components:{
@@ -49,9 +56,8 @@ export default defineComponent({
         IonTitle,
         IonToolbar,
         IonLabel,
-        IonInput,
         IonItem,
-        IonButton,
+    
     },
     props: {
         isOpenInfo : {
@@ -62,30 +68,12 @@ export default defineComponent({
             default: {},
         }
     },
-    data(){
-        return {
-            ur: "Cornélio Procópio",
-            pulverizacao: {
-                alvos: {
-                id: 0,
-                descricao: "Folhas Largas",
-                classeDeUso: "Herbicida",
-                data: "24-10-2020",
-                responsavelTecnico: "José da Silva",
-                ultimaAlteracao: "31-10-2020",
-                }
-            }
-        }
-    },
 
     setup(props: any, ctx: SetupContext){   
         const formInfoAlvo = reactive<any> ({
             descricao: "",
             classeDeUso: "",
-            data: "",
         });
-
-        
 
         watch(
             () => props.initialValues,
@@ -109,9 +97,16 @@ export default defineComponent({
             //proprieties
             formInfoAlvo,
 
+            close
 
         };
     }
 });
 
 </script>
+
+<style scoped>
+    ion-item {
+        width: 100%;
+    }
+</style>

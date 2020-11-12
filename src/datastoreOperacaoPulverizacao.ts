@@ -27,16 +27,5 @@ export default function(){
         deleteOperacaoPulverizacao:(item: any) => {
             listDataOperacaoPulverizacao.delete(item.id);
         },
-
-        addProdutoOperacaoPulverizacao:(item: any, id?: string) => {
-            //if id use it, else create one
-            const _id = id || new Date().getTime().toString();
-            
-            //add to map, set id
-            listDataOperacaoPulverizacao.set( _id,{
-                ...item,
-                id:_id,
-            })
-        },
     }
 }
